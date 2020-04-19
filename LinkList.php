@@ -4,7 +4,7 @@ include_once "Node.php";
 class LinkList
 {
     private $firstNode;
-    private $lastNode;
+    public $lastNode;
     private $count;
 
     function __construct()
@@ -29,14 +29,39 @@ class LinkList
 
     public function insertLast($data)
     {
+        if ($this->count == 1) {
+            $link = new Node($data);
+            $this->firstNode->next = $link;
+            $this->lastNode = $link;
+            $this->count++;
+        }
         if ($this->firstNode != null) {
             $link = new Node($data);
             $this->lastNode->next = $link;
-            $link->next = null;
+            //$link->next = null;
             $this->lastNode = $link;
             $this->count++;
         } else {
             $this->insertFirst($data);
+        }
+    }
+
+    public function insert($data, $index)
+    {
+        if ($index == 0) {
+            $this->insertFirst($data);
+        } else {
+            $link = new Node($data);
+            $current = $this->firstNode;
+            $previous = $this->firstNode;
+
+            for ($i = 0; $i < $index; $i++) {
+                $previous = $current;
+                $current = $current->next;
+            }
+            $link->next = $current;
+            $previous->next = $link;
+            $this->count++;
         }
     }
 
@@ -55,5 +80,15 @@ class LinkList
             $current = $current->next;
         }
         return $listData;
+    }
+
+    public function getFirstNode()
+    {
+        return $this->firstNode;
+    }
+
+    public function getLastNode()
+    {
+        return $this->lastNode;
     }
 }
