@@ -34,8 +34,7 @@ class LinkList
             $this->firstNode->next = $link;
             $this->lastNode = $link;
             $this->count++;
-        }
-        if ($this->firstNode != null) {
+        } elseif ($this->firstNode != null) {
             $link = new Node($data);
             $this->lastNode->next = $link;
             //$link->next = null;
